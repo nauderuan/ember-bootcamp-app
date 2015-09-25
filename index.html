@@ -2,38 +2,64 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>What should I do?</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Abbas Mashhouri Component</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-    <body>
-        <script type="text/x-handlebars" data-template-name="todos">
-            <section id="todoapp">
-                <header id="header">
-                    <h1>The TODO list</h1>
-                </header>
+<body>
+    <h1 class="mainTitle"> Task Component</h1>
+    <script type="text/x-handlebars" data-template-name="Abs">
+        <section id="TasksSection">
+            <header id="header">
+                <input type="checkbox" id="chk-all" {{action "checkAll" on="change" }}>
+                {{input type="text" id="new-Tasks" placeholder="Add Task here (type then enter)"
+                value=newTitle action="createTask"}}
+            </header>
+            <section id="main">
+                <ul id="Tasks-list">
+                    {{#each Task in model itemController="Tasks"}}
+                    <li {{bind-attr class="Task.isDone:completed Task.editMode:editing" }}>
+                        {{#if Task.editMode}}
+                        {{input type="text" value=Task.title class="edit" data-id=Task.id focus-out="changeTask" insert-newline="changeTask"}}
+                        {{else}}
+                        {{input type="checkbox" checked=Task.isDone class="chk" }}
+                        <label {{action "editTasks" on="doubleClick" }}>{{Task.title}}</label><button {{action "removeTask" }} class="remove"></button>
+                        {{/if}}
+                    </li>
+                    {{/each}}
+                </ul>
 
-                <section id="main">
-                </section>
-
-                <footer id="footer">
-                </footer>
             </section>
-
-            <footer id="info">
+            <footer id="footer">
+                <span id="Tasks-count">
+                    <strong>{{remainCount}}</strong> task(s) left
+                </span>
+                <ul id="filters">
+                    <li>
+                        <button id="allTasksBtn" {{action "allTasks" }} class="linkBtn selected">All</button>
+                    </li>
+                    <li>
+                        <button id="activeTasksBtn" {{action "activeTasks" }} class="linkBtn">Active</button>
+                    </li>
+                    <li>
+                        <button id="doneTasksBtn" {{action "doneTasks" }} class="linkBtn">Completed</button>
+                    </li>
+                </ul>
+                <button class="linkBtn right" {{action "removeAllCompleted" }}>
+                    Clear completed ({{doneCount}})
+                </button>
             </footer>
-        </script>
+        </section>
 
-        <script type="text/x-handlebars" id="components/todo-item">
-        </script>
-
-        <script src="js/libs/jquery-1.10.2.js"></script>
-        <script src="js/libs/handlebars-1.0.0.js"></script>
-        <script src="js/libs/ember-1.1.2.js"></script>
-        <script src="js/libs/ember-data.js"></script>
-        <script src="js/application.js"></script>
-        <script src="js/router.js"></script>
-        <script src="js/models/todo.js"></script>
-        <script src="js/controllers/todos_controller.js"></script>
-        <script src="js/components/todo-item.js"></script>
-    </body>
+    </script>
+    <script src="js/libs/jquery-1.10.2.js"></script>
+    <script src="js/libs/handlebars-1.0.0.js"></script>
+    <script src="js/libs/ember-1.1.2.js"></script>
+    <script src="js/libs/ember-data.js"></script>
+    <script src="js/application.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/models/todo.js"></script>
+    <script src="js/controllers/todos_controller.js"></script>
+    <script src="js/components/todo-item.js"></script>
+</body>
 </html>
