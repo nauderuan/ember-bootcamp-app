@@ -1,3 +1,3 @@
-App = Ember.Application.create();
+window.Abs = Ember.Application.create();
 
-App.ApplicationAdapter = DS.FixtureAdapter.extend();
+Abs.ApplicationAdapter = DS.FixtureAdapter.extend();

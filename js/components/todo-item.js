@@ -1,4 +1,4 @@
-App.TodoItemComponent = Ember.Component.extend({
+Abs.TodoItemComponent = Ember.Component.extend({
     actions: {
     }
 });
