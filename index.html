@@ -17,16 +17,9 @@
             </header>
             <section id="main">
                 <ul id="Tasks-list">
-                    {{#each Task in model itemController="Tasks"}}
-                    <li {{bind-attr class="Task.isDone:completed Task.editMode:editing" }}>
-                        {{#if Task.editMode}}
-                        {{input type="text" value=Task.title class="edit" data-id=Task.id focus-out="changeTask" insert-newline="changeTask"}}
-                        {{else}}
-                        {{input type="checkbox" checked=Task.isDone class="chk" }}
-                        <label {{action "editTasks" on="doubleClick" }}>{{Task.title}}</label><button {{action "removeTask" }} class="remove"></button>
-                        {{/if}}
-                    </li>
-                    {{/each}}
+				   {{#each}}
+					{{todo-item task=this}}
+				   {{/each}}
                 </ul>
 
             </section>
@@ -52,13 +45,24 @@
         </section>
 
     </script>
+				 <script type="text/x-handlebars" data-template-name='components/todo-item'> 
+
+                    <li {{bind-attr class="task.isDone:completed task.editMode:editing" }}>
+                        {{#if  task.editMode}}
+							{{input type="text" value=task.title class="edit" data-id=task.id focus-out="changeTask" insert-newline="changeTask"}}
+                        {{else}}
+                        {{input type="checkbox" checked=task.isDone class="chk" }}
+							<label {{action "editTasks" on="doubleClick" }}>{{task.title}}</label><button {{action "removeTask" }} class="remove"></button>
+                        {{/if}}
+                    </li>
+                   
+				</script> 
     <script src="js/libs/jquery-1.10.2.js"></script>
     <script src="js/libs/handlebars-1.0.0.js"></script>
     <script src="js/libs/ember-1.1.2.js"></script>
     <script src="js/libs/ember-data.js"></script>
     <script src="js/application.js"></script>
     <script src="js/router.js"></script>
-    <script src="js/models/todo.js"></script>
     <script src="js/controllers/todos_controller.js"></script>
     <script src="js/components/todo-item.js"></script>
 </body>
