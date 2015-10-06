@@ -13,21 +13,8 @@ Abs.TodoItemComponent = Ember.Component.extend({
             }), 100);
         },
         removeTask: function () {
-			Abs.Tasks.removeObject(this.task)
+			Abs.AbsController.prototype.arrTasks.removeObject(this.task)
         }
     },
-    editMode: false,
-    isDone: function (key, value) {
-        var model = this.get('task');
-
-        if (value === undefined) {
-            // property being used as a getter
-            return model.get('task.isDone');
-        } else {
-            // property being used as  setter
-            model.set('task.isDone', value);
-            // model.save();
-            return value;
-        }
-    }.property('task.isDone')
+    editMode: false
 });
