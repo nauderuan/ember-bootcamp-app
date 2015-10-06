@@ -1,27 +1,54 @@
 Abs.AbsController = Ember.ArrayController.extend({
+	arrTasks :  [
+					{
+						id: 1,
+						title: 'Task 1 description',
+						isDone: true
+					},
+					{
+						id: 2,
+						title: 'Task 2 description',
+						isDone: false
+					},
+					{
+						id: 3,
+						title: 'Task 3 description',
+						isDone: false
+					},
+					{
+						id: 4,
+						title: 'Task 4 description',
+						isDone: true
+					},
+					{
+						id: 5,
+						title: 'Task 5 description',
+						isDone: false
+					}
+				],			
     actions: {
         checkAll: function () {
             var checked = $('#chk-all')[0].checked;
-            var store = this.get('store'), model = this.get('model');
-            model.setEach('isDone', checked)
+            var  arr = this.arrTasks;
+            arr.setEach('isDone', checked)
         },
         createTask: function () {
             // Get the Tasks title set by the "New Tasks" text field
-            var title = this.get('newTitle');
+            var title = this.get('newTitle'),arr=this.arrTasks;
             if (!title.trim()) { return; }
 			var newTask = {
                 title: title,
                 isDone: false
             };
-			this.get('model').pushObject(newTask);
+			arr.pushObject(newTask);
             // Clear the "New Tasks" text field
             this.set('newTitle', '');
 
         },
 
         removeAllCompleted: function () {
-            var model = this.get('model');
-			Abs.Tasks.removeObjects(model.filterBy('isDone',true))
+            var arr = this.arrTasks;
+			arr.removeObjects(arr.filterBy('isDone',true))
         },
 
         allTasks: function () {
@@ -37,11 +64,11 @@ Abs.AbsController = Ember.ArrayController.extend({
 
     },
 		showTask: function(isDone){
-		var me = this;
+		var me = this,arr = me.arrTasks;
 		            me.removeSelectedClass();
-			me.set('model',Abs.Tasks);
+			arr.setEach('hidden', false)
 			if(isDone != null){
-				me.set('model',  me.get('model').filterBy('isDone',isDone));
+				  arr.filterBy('isDone',isDone).setEach('hidden', true);
 				isDone==true?$('#doneTasksBtn').addClass('selected'):$('#activeTasksBtn').addClass('selected');
 			}
 			else
@@ -50,12 +77,14 @@ Abs.AbsController = Ember.ArrayController.extend({
 			}
 		},
     remainCount: function () {
-        return this.filterProperty('isDone', false).get('length');
-    }.property('@each.isDone'),
+		var arr = this.arrTasks;
+        return arr.filterBy('isDone', false).get('length');
+    }.property('arrTasks','arrTasks.@each.isDone'),
 
     doneCount: function () {
-        return this.filterProperty('isDone', true).get('length');
-    }.property('@each.isDone'),
+		var arr = this.arrTasks;
+        return arr.filterBy('isDone', true).get('length');
+    }.property('arrTasks','arrTasks.@each.isDone'),
 
     removeSelectedClass: function () {
         $('#allTasksBtn').removeClass('selected');
