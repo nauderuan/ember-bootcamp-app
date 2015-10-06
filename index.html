@@ -17,8 +17,10 @@
             </header>
             <section id="main">
                 <ul id="Tasks-list">
-				   {{#each}}
-					{{todo-item task=this}}
+				   {{#each item in arrTasks}}
+				    {{#unless item.hidden}}
+						{{todo-item task=item}}
+					{{/unless}}
 				   {{/each}}
                 </ul>
 
